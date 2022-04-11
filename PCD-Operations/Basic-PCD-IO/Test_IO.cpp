@@ -1,5 +1,6 @@
 #include <iostream>
 #include <pcl/io/pcd_io.h>
+#include <pcl/io/ply_io.h>
 #include <pcl/point_types.h>
 
 
@@ -10,7 +11,7 @@ int main(void){
     
     PointCloud<PointXYZ>::Ptr cloud (new PointCloud<PointXYZ>);
 
-    if (io::loadPCDFile<PointXYZ> ("/home/ruturajn/Documents/Project-Files/CUDA_Scripts/PCD_IO/scan_Velodyne_VLP16.pcd", *cloud) == -1)
+    if (io::loadPLYFile<PointXYZ> ("/home/ruturajn/Downloads/Pandaset/Lidar/0001_test_2.ply", *cloud) == -1)
     {
         PCL_ERROR("Couldn't read the file scan_Velodyne_VLP16.pcd \n");
         return (-1);
@@ -22,7 +23,7 @@ int main(void){
          << endl;
     
     // for (const auto& point: *cloud)
-    //     cout << "    " << point.x
+    //          cout << "    " << point.x
     //          << " "    << point.y
     //          << " "    << point.z << endl;
 

@@ -29,15 +29,12 @@ using namespace pcl;
 __global__ void MatTransformKernel(PointXYZ *d_points_in, float *rot_matrix,
                                    float *trans_matrix, int num_points, PointXYZ *d_points_out)
 {
-
     // Defining global thread ID
     int tid = threadIdx.x + (blockDim.x * blockIdx.x);
 
-    float prod_out[3];
-
+    float prod_out[3]={0};
     if (tid < num_points)
     {
-        float prod = 0.0f;
         for (int i = 0; i < 3; i++)
         {
             prod_out[i] += rot_matrix[i * 3] * d_points_in[tid].x;
@@ -52,10 +49,9 @@ __global__ void MatTransformKernel(PointXYZ *d_points_in, float *rot_matrix,
 
 int Mat_Transform(PointCloud<PointXYZ>::Ptr &cloud_in, PointCloud<PointXYZ>::Ptr &cloud_out)
 {
-
     // Printing the number of points loaded
-    cout << "Loaded " << cloud_in->width * cloud_out->height
-         << " data points from airplane.ply" << endl;
+    cout << "Loaded " << cloud_in->width * cloud_in->height
+         << " data points" << endl;
 
     float rot_matrix[9] = {cos(theta), -sin(theta), 0.0,
                            sin(theta), cos(theta), 0.0,
@@ -81,6 +77,8 @@ int Mat_Transform(PointCloud<PointXYZ>::Ptr &cloud_in, PointCloud<PointXYZ>::Ptr
     // Calculate the threads and block required
     int BLOCKSx = (cloud_in->points.size() + THREADSx - 1) / THREADSx;
 
+    cout << "Num Blocks : " << BLOCKSx << endl;
+
     dim3 threads(THREADSx);
     dim3 blocks(BLOCKSx);
 
@@ -97,7 +95,7 @@ int Mat_Transform(PointCloud<PointXYZ>::Ptr &cloud_in, PointCloud<PointXYZ>::Ptr
     // Copy data back to host from device
     cudaMemcpy(cloud_out->points.data(), d_points_out, cloud_in->points.size() * sizeof(PointXYZ), cudaMemcpyDeviceToHost);
 
-    // for (const auto &point : *cloud_out)
+    // for (const auto &point : *cloud_in)
     //     cout << "    " << point.x
     //          << " " << point.y
     //          << " " << point.z << endl;

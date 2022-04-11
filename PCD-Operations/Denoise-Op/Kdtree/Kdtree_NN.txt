@@ -1,0 +1,8 @@
+https://bitbucket.org/StableSort/play/src/master/src/com/stablesort/kdtree/KDTree.java
+https://kanoki.org/2020/08/05/find-nearest-neighbor-using-kd-tree/
+https://yasenh.github.io/post/kd-tree/
+https://www.coursera.org/lecture/ml-clustering-and-retrieval/nn-search-with-kd-trees-6eTzw?redirectTo=%2Flearn%2Fml-clustering-and-retrieval%3Faction%3Denroll
+https://www.analyticsvidhya.com/blog/2017/11/information-retrieval-using-kdtree/
+http://www.cs.umd.edu/~mount/ANN/
+https://www.mdpi.com/1424-8220/21/11/3703/htm
+https://www.cs.cornell.edu/courses/cs4780/2018fa/lectures/lecturenote16.html
