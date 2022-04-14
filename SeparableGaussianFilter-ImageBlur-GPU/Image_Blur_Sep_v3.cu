@@ -222,7 +222,7 @@ int main(void){
     //Mat h_img = imread("/usr/share/backgrounds/brad-huchteman-stone-mountain.jpg", 1);
     //Mat h_img = imread("../Images/138728.jpg", 1);
     //Mat h_img = imread("../Images/2040735.jpg", 1);
-    Mat h_img = imread("../Images/UI-Sidewalk-640x480.jpg", 1);
+    Mat h_img = imread("./UI-Sidewalk-640x480.jpg", 1);
 
     cout << h_img.cols << " || " << h_img.rows << endl;
 
