@@ -47,8 +47,31 @@ __global__ void MatTransformKernel(PointXYZ *d_points_in, float *rot_matrix,
     }
 }
 
+void MatTransformFunc(PointXYZ *points_in, float *rot_matrix, float *trans_matrix,
+                      int num_points, PointXYZ *points_out){
+    for (int tid=0;tid<num_points;tid++){
+        float prod_out[3] = {0};
+
+        for (int i=0;i<3;i++){
+            prod_out[i] += rot_matrix[i * 3] * points_in[tid].x;
+            prod_out[i] += rot_matrix[i * 3 + 1] * points_in[tid].y;
+            prod_out[i] += rot_matrix[i * 3 + 2] * points_in[tid].z;
+        }
+        points_out[tid].x = prod_out[0] + trans_matrix[0];
+        points_out[tid].y = prod_out[1] + trans_matrix[1];
+        points_out[tid].z = prod_out[2] + trans_matrix[2];
+    }
+}
+
 int Mat_Transform(PointCloud<PointXYZ>::Ptr &cloud_in, PointCloud<PointXYZ>::Ptr &cloud_out)
 {
+    
+    // Create events to time the kernel
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    float exec_time;
+    
     // Printing the number of points loaded
     cout << "Loaded " << cloud_in->width * cloud_in->height
          << " data points" << endl;
@@ -82,6 +105,7 @@ int Mat_Transform(PointCloud<PointXYZ>::Ptr &cloud_in, PointCloud<PointXYZ>::Ptr
     dim3 threads(THREADSx);
     dim3 blocks(BLOCKSx);
 
+    cudaEventRecord(start);
     MatTransformKernel<<<blocks, threads>>>(d_points_in, d_rot_matrix, d_trans_matrix, cloud_in->points.size(), d_points_out);
     cudaDeviceSynchronize();
     cudaError_t err = cudaGetLastError();
@@ -91,6 +115,14 @@ int Mat_Transform(PointCloud<PointXYZ>::Ptr &cloud_in, PointCloud<PointXYZ>::Ptr
         printf("CUDA error: %s\n", cudaGetErrorString(err));
         exit(-1);
     }
+
+
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
+    cudaEventElapsedTime(&exec_time, start, stop);
+
+    //Print Layer 1 Convolution Exec time
+    cout << "Time required to perform Point Cloud Transformation : " << exec_time << endl;
 
     // Copy data back to host from device
     cudaMemcpy(cloud_out->points.data(), d_points_out, cloud_in->points.size() * sizeof(PointXYZ), cudaMemcpyDeviceToHost);

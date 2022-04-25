@@ -33,12 +33,12 @@ int main(void)
     PointCloud<PointXYZ>::Ptr cloud_out(new PointCloud<PointXYZ>());
 
     // Read the pcl file for the point cloud data
-    // io::loadPLYFile("../airplane.ply", *cloud_in);
-    // io::loadPLYFile("../airplane.ply", *cloud_out);
-    // io::loadPLYFile("./teapot.ply", *cloud_in);
-    // io::loadPLYFile("./teapot.ply", *cloud_out);
-    io::loadPCDFile("../denoised_teapot.pcd",*cloud_in);
-    io::loadPCDFile("../denoised_teapot.pcd",*cloud_out);
+    io::loadPLYFile("../airplane.ply", *cloud_in);
+    io::loadPLYFile("../airplane.ply", *cloud_out);
+    // io::loadPLYFile("../teapot.ply", *cloud_in);
+    // io::loadPLYFile("../teapot.ply", *cloud_out);
+    //io::loadPCDFile("../denoised_teapot.pcd",*cloud_in);
+    //io::loadPCDFile("../denoised_teapot.pcd",*cloud_out);
 
     // Call the pre-processing function
     Mat_Transform(cloud_in, cloud_out);
