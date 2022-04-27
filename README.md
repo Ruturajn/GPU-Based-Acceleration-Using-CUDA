@@ -37,6 +37,30 @@ GPU-Based-Acceleration-Using-CUDA
 │       ├── Dense_Layer_128_Bias.txt
 │       ├── Dense_Layer_128_Weights.txt
 │       └── Dense_Layer_1_Weights.txt
+├── CD-Classifier-CPP
+│   ├── Data.m
+│   ├── inc
+│   │   ├── CNN_Funcs.h
+│   │   ├── CNNWeights_Layer1.h
+│   │   ├── CNNWeights_Layer2.h
+│   │   ├── CNNWeights_Layer3_128.h
+│   │   └── CNNWeights_Layer4_1.h
+│   ├── Input_Image.txt
+│   ├── Makefile
+│   ├── Model_CD.m
+│   ├── src
+│   │   ├── CNN_Inference.cpp
+│   │   ├── CNN_Layers.cpp
+│   │   ├── main.cpp
+│   │   └── Pre_Process.cpp
+│   └── Text-Weight-Files
+│       ├── Bias_Layer_1.txt
+│       ├── Bias_Layer_2.txt
+│       ├── Conv_Layer_1.txt
+│       ├── Conv_Layer_2.txt
+│       ├── Dense_Layer_128_Bias.txt
+│       ├── Dense_Layer_128_Weights.txt
+│       └── Dense_Layer_1_Weights.txt
 ├── CNN-Accel
 │   ├── inc
 │   │   ├── CNN_Funcs.h
@@ -201,5 +225,5 @@ GPU-Based-Acceleration-Using-CUDA
     ├── README.md
     └── UI-Sidewalk-640x480.jpg
 
-37 directories, 159 files
+41 directories, 179 files
 ```
