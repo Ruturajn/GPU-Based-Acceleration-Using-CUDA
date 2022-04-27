@@ -36,6 +36,7 @@ float pre_process(Mat &in_img)
                             conv_layer1_out, size_layer1, num_wt_elements_layer1, kernel_size_layer1);
 
 
+    /********************Extracting Per Channel Outputs and storing them in a Image*********************/
     // cv::Mat conv_layer1_img(conv_layer_1_output_size, conv_layer_1_output_size, CV_32FC1);
     // memcpy(conv_layer1_img.ptr(), conv_layer1_out, conv_layer_1_output_size * conv_layer_1_output_size * sizeof(float));
     // //imshow("Conv-1-Output", conv_layer1_img);
@@ -43,7 +44,7 @@ float pre_process(Mat &in_img)
     // imwrite("Conv-1-Output.png", conv_layer1_img);
 
     // for (int i=0;i<conv_layer_1_output_size;i++){
-    //     cout << conv_layer1_out[(i*conv_layer_1_output_size + 10)*num_filters_layer1 + 1] << "," << i+1 << endl;
+    //    cout << conv_layer1_out[(i*conv_layer_1_output_size + 3)*num_filters_layer1 + 1] << "," << i+1 << endl;
     // }
 
 
@@ -91,6 +92,13 @@ float pre_process(Mat &in_img)
     exec_time4 = Max_Pool_Layer(conv_layer2_out, pool_size, pool_stride, 
                                 max_pool_layer2_out, max_pool_out_size_layer2,
                                 num_filters_layer2, conv_layer_2_output_size);
+    
+    // for (int i=0;i<max_pool_out_size_layer2;i++){
+    //     //for (int j=0;j<max_pool_out_size_layer2;j++){
+    //         cout << max_pool_layer2_out[(i*max_pool_out_size_layer2 + 1)*num_filters_layer2 + 0] << ",";
+    //     //}
+    //     cout << "" << endl;
+    // }
 
     /***********************************Dense FC Layer 1********************************/
 
@@ -112,14 +120,18 @@ float pre_process(Mat &in_img)
     float *dense_layer1_out;
     dense_layer1_out = (float *)malloc(num_dense_layer1 * sizeof(float));
 
-    exec_time5 = Dense_Layer(flattened_arr, Layer_3_Weights, dense_layer1_out,
+    exec_time5 = Dense_Layer(flattened_arr, Layer_3_Weights, Layer_3_Bias,dense_layer1_out,
                              max_pool_out_size_layer2, num_filters_layer2, num_dense_layer1, 
                              num_wt_elements_layer3, num_flattened);
+
+    for (int i=0;i<num_dense_layer1;i++){
+        cout << dense_layer1_out[i] << endl;
+    }
 
 
     /***********************************Dense FC Layer 2********************************/
 
-    float *final_pred, prediction;
+    float *final_pred, prediction = Layer_4_Bias;
     final_pred = (float *)malloc(num_dense_layer2 * sizeof(float));
 
     exec_time6 = Dense_Layer_Final(dense_layer1_out, Layer_4_Weights, final_pred,
@@ -130,9 +142,10 @@ float pre_process(Mat &in_img)
         prediction += final_pred[i];
     }
 
-    cout << "The Total Time on GPU : " << exec_time1 + exec_time2 + exec_time3 + exec_time4 + exec_time5 + exec_time6 << endl;
+    total_time = exec_time1 + exec_time2 + exec_time3 + exec_time4 + exec_time5 + exec_time6;
+    cout << "The Total Time on GPU : " << total_time << endl;
 
-    prediction += Layer_4_Bias;
+    //prediction += Layer_4_Bias;
     cout << "Final Pred before sigmoid : " << prediction << endl;
     prediction = (1 / (1 + exp(-1.0 * prediction)));
     cout << "Final Pred after sigmoid : " << prediction << endl;

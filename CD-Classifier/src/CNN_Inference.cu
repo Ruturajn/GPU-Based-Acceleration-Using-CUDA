@@ -100,7 +100,7 @@ __global__ void Conv_Kernel(float *d_in_img, float *d_layer_wt,
             }
             img_index_out = ((row*num_cols) + col)*num_filters + i;
             // Do ReLU operation and write the output
-            if (prod < 0)
+            if (prod <= 0)
                 d_layer_conv_out[img_index_out] = 0;
             else
                 d_layer_conv_out[img_index_out] = prod;
@@ -153,7 +153,7 @@ __global__ void Max_Pool_Kernel(float *d_layer_prev_conv_out, int stride, int ma
     }
 }
 
-__global__ void Dense_Layer_Kernel(float *d_layer_conv_out, float *d_layer_wt,
+__global__ void Dense_Layer_Kernel(float *d_layer_conv_out, float *d_layer_wt, float *d_layer_bias,
                                    float *d_pred, int in_size,
                                    int num_dense_elements, int num_flattened_elements){
 
@@ -166,16 +166,21 @@ __global__ void Dense_Layer_Kernel(float *d_layer_conv_out, float *d_layer_wt,
         int index;
         //float prod = 0.0f;
 
-        if (threadIdx.x == 0 && blockIdx.x == 0 && threadIdx.y == 0 && blockIdx.y == 0)
-            printf("This Dense Kernel is executing\n");
+        // if (threadIdx.x == 0 && blockIdx.x == 0 && threadIdx.y == 0 && blockIdx.y == 0)
+        //     printf("This Dense Kernel is executing\n");
+        float prod = d_layer_bias[tid];
         
         // For every filter in the previous conv layer
         for (int i=0;i<num_flattened_elements;i++){
             //wt_index =  ((row * in_size) + col) + (i in_size);
             //d_pred[wt_index] = d_layer_conv_out[img_index] * d_layer_wt[wt_index];
             index = (tid*num_flattened_elements + i);
-            d_pred[tid] += d_layer_conv_out[i] * d_layer_wt[index];
+            prod += d_layer_conv_out[i] * d_layer_wt[index];
         }
+        if (prod > 0)
+            d_pred[tid] = prod;
+        else
+            d_pred[tid] = 0.0f;
     }
 }
 

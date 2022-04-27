@@ -144,9 +144,9 @@ float Max_Pool_Layer(float *layer_prev_conv_out, int max_pool_size,
     return exec_time;
 }
 
-float Dense_Layer(float *layer_prev_out,const float *layer_wt, float *layer_out, int in_size,
-                 int num_filters, int out_size, int num_wt_elements,
-                 int num_flattened_elements){
+float Dense_Layer(float *layer_prev_out,const float *layer_wt, const float *layer_bias,
+                 float *layer_out, int in_size, int num_filters, int out_size,
+                 int num_wt_elements, int num_flattened_elements){
     
     // Create events to time the kernel
     cudaEvent_t start, stop;
@@ -154,13 +154,15 @@ float Dense_Layer(float *layer_prev_out,const float *layer_wt, float *layer_out,
     cudaEventCreate(&stop);
     float exec_time = 0.0f;
 
-    float *d_final_pred, *d_layer_wt, *d_layer_prev_out;
+    float *d_final_pred, *d_layer_wt, *d_layer_prev_out, *d_layer_bias;
     cudaMalloc((void**)&d_layer_wt, num_wt_elements * sizeof(float));
     cudaMalloc((void**)&d_final_pred, out_size * sizeof(float));
     cudaMalloc((void**)&d_layer_prev_out, in_size * in_size * num_filters * sizeof(float));
+    cudaMalloc((void**)&d_layer_bias, out_size * sizeof(float));
 
     cudaMemcpy(d_layer_prev_out, layer_prev_out, in_size * in_size * num_filters * sizeof(float), cudaMemcpyHostToDevice);
     cudaMemcpy(d_layer_wt, layer_wt, num_wt_elements * sizeof(float), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_layer_bias, layer_bias, out_size * sizeof(float), cudaMemcpyHostToDevice);
 
     //Configuring threads and blocks
     int BLOCKSx = (out_size + THREADSx - 1) / THREADSx;
@@ -170,7 +172,7 @@ float Dense_Layer(float *layer_prev_out,const float *layer_wt, float *layer_out,
 
     cout << out_size  << "|" << out_size << endl;
     cudaEventRecord(start);
-    Dense_Layer_Kernel<<<blocks_2, threads_2>>>(d_layer_prev_out, d_layer_wt, d_final_pred,
+    Dense_Layer_Kernel<<<blocks_2, threads_2>>>(d_layer_prev_out, d_layer_wt, d_layer_bias,d_final_pred,
                                                 in_size, out_size, num_flattened_elements);
 
     cudaDeviceSynchronize();
@@ -196,6 +198,7 @@ float Dense_Layer(float *layer_prev_out,const float *layer_wt, float *layer_out,
     cudaFree(d_layer_prev_out);
     cudaFree(d_layer_wt);
     cudaFree(d_final_pred);
+    cudaFree(d_layer_bias);
 
     // Return exec. time
     return exec_time;

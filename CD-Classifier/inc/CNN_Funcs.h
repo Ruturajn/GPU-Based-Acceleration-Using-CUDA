@@ -23,9 +23,9 @@ float Max_Pool_Layer(float *layer_prev_conv_out, int max_pool_size,
                     int in_size);
 
 // The Dense Layer Function that calls the Dense Layer kernel
-float Dense_Layer(float *layer_prev_out,const float *layer_wt, float *layer_out, int in_size,
-                 int num_filters, int out_size, int num_wt_elements,
-                 int num_flattened_elements);
+float Dense_Layer(float *layer_prev_out,const float *layer_wt, const float *layer_bias,
+                 float *layer_out, int in_size, int num_filters, int out_size,
+                 int num_wt_elements, int num_flattened_elements);
 
 // The Final Dense Layer function that calls the Final Dense Layer Kernel
 float Dense_Layer_Final(float *layer_prev_out, const float *layer_wt,
@@ -44,8 +44,8 @@ __global__ void Max_Pool_Kernel(float *d_layer_prev_conv_out, int stride, int ma
                                 int num_rows_after_conv, int num_filters);
 
 // Dense Layer Kernel (In CNN_Inference.cu)
-__global__ void Dense_Layer_Kernel(float *d_layer_conv_out, float *d_layer_wt,
-                                   float *d_final_pred, int in_size,
+__global__ void Dense_Layer_Kernel(float *d_layer_conv_out, float *d_layer_wt, float *d_layer_bias,
+                                   float *d_pred, int in_size,
                                    int num_dense_elements, int num_flattened_elements);
 
 // Final Dense Layer Kernel (In CNN_Inference.cu)
