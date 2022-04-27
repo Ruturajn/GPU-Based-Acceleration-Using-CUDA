@@ -88,6 +88,10 @@ GPU-Based-Acceleration-Using-CUDA
 │       ├── Conv_Layer_1.txt
 │       ├── Conv_Layer_2.txt
 │       └── Dense_Layer_Weight.txt
+├── CUDA-Histogram-Equalization
+│   ├── Image_Hist_Eql_8_bit.cu
+│   ├── Image_Hist_Eql.cu
+│   └── Makefile
 ├── Image_Blur_GPU
 │   ├── cinque_terre.gold
 │   ├── cinque_terre_small.jpg
@@ -197,5 +201,5 @@ GPU-Based-Acceleration-Using-CUDA
     ├── README.md
     └── UI-Sidewalk-640x480.jpg
 
-36 directories, 156 files
+37 directories, 159 files
 ```
