@@ -14,13 +14,16 @@ GPU-Based-Acceleration-Using-CUDA
 │   ├── README.md
 │   └── Vid_Grayscale.cu
 ├── CD-Classifier
+│   ├── Data.m
 │   ├── inc
 │   │   ├── CNN_Funcs.h
 │   │   ├── CNNWeights_Layer1.h
 │   │   ├── CNNWeights_Layer2.h
 │   │   ├── CNNWeights_Layer3_128.h
 │   │   └── CNNWeights_Layer4_1.h
+│   ├── Input_Image.txt
 │   ├── Makefile
+│   ├── Model_CD.m
 │   ├── src
 │   │   ├── CNN_Inference.cu
 │   │   ├── CNN_Layers.cu
@@ -165,6 +168,7 @@ GPU-Based-Acceleration-Using-CUDA
 │   │   └── Matrix_Transform.cpp
 │   ├── scan_Velodyne_VLP16.pcd
 │   └── teapot.ply
+├── README.md
 ├── SeparableGaussianFilter-ImageBlur-GPU
 │   ├── 138728.jpg
 │   ├── 2040735.jpg
@@ -193,5 +197,5 @@ GPU-Based-Acceleration-Using-CUDA
     ├── README.md
     └── UI-Sidewalk-640x480.jpg
 
-36 directories, 152 files
+36 directories, 156 files
 ```
