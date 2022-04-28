@@ -2,6 +2,7 @@
 
 GPU-Based-Acceleration-Using-CUDA
 
+
 ```
 ./
 ├── 2D-Matrix-Add
@@ -13,6 +14,7 @@ GPU-Based-Acceleration-Using-CUDA
 │   ├── Makefile
 │   ├── README.md
 │   └── Vid_Grayscale.cu
+├── CD-Classfier-Script
 ├── CD-Classifier
 │   ├── Data.m
 │   ├── inc
@@ -225,5 +227,5 @@ GPU-Based-Acceleration-Using-CUDA
     ├── README.md
     └── UI-Sidewalk-640x480.jpg
 
-41 directories, 179 files
+41 directories, 180 files
 ```
