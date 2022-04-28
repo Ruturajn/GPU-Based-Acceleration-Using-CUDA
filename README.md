@@ -15,6 +15,7 @@ GPU-Based-Acceleration-Using-CUDA
 │   ├── README.md
 │   └── Vid_Grayscale.cu
 ├── CD-Classfier-Script
+├── CD-Classfier-Timing
 ├── CD-Classifier
 │   ├── Data.m
 │   ├── inc
@@ -227,5 +228,5 @@ GPU-Based-Acceleration-Using-CUDA
     ├── README.md
     └── UI-Sidewalk-640x480.jpg
 
-41 directories, 180 files
+41 directories, 181 files
 ```
