@@ -124,9 +124,9 @@ float pre_process(Mat &in_img)
                              max_pool_out_size_layer2, num_filters_layer2, num_dense_layer1, 
                              num_wt_elements_layer3, num_flattened);
 
-    for (int i=0;i<num_dense_layer1;i++){
-        cout << dense_layer1_out[i] << endl;
-    }
+    //for (int i=0;i<num_dense_layer1;i++){
+    //    cout << dense_layer1_out[i] << endl;
+    //}
 
 
     /***********************************Dense FC Layer 2********************************/

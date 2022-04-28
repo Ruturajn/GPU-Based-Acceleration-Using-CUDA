@@ -21,14 +21,14 @@ float pre_process(Mat &in_img);
 int main(int argc, char** argv){
 
     // File Handling
-    fstream in_file;
-    in_file.open("Input_Image.txt",ios::out);
+    //fstream in_file;
+    //in_file.open("Input_Image.txt",ios::out);
 
-    if (!in_file){
-        cout << "File Creation Failed!!" << endl;
-        return 0;
-    }
-    else{
+    //if (!in_file){
+    //    cout << "File Creation Failed!!" << endl;
+    //    return 0;
+    //}
+    //else{
 
         // Reading the input image
         //Mat h_img = imread("/home/ruturajn/Downloads/test1/20.jpg", 1);
@@ -42,9 +42,9 @@ int main(int argc, char** argv){
         //resize(resized_in_image, resized_in_image, Size(64,64), INTER_MAX);
         resize(resized_in_image, resized_in_image, Size(64,64));
 
-        float *resized_img_data;
-        resized_img_data = (float *)malloc(resized_in_image.rows * resized_in_image.cols * resized_in_image.channels() * sizeof(float));
-        memcpy(resized_img_data, resized_in_image.ptr(), resized_in_image.rows * resized_in_image.cols * resized_in_image.channels() * sizeof(float));
+        //float *resized_img_data;
+        //resized_img_data = (float *)malloc(resized_in_image.rows * resized_in_image.cols * resized_in_image.channels() * sizeof(float));
+        //memcpy(resized_img_data, resized_in_image.ptr(), resized_in_image.rows * resized_in_image.cols * resized_in_image.channels() * sizeof(float));
 
         // for (int i=0;i<resized_in_image.rows;i++){
         //     cout << resized_img_data[(i*resized_in_image.cols + 0)*resized_in_image.channels() + 0] << "," << i+1;
@@ -72,10 +72,10 @@ int main(int argc, char** argv){
             cout << "Cat Detected" << endl;
         }
         
-        //imshow("Detection",h_img);
-        //cv::waitKey(0);
-        free(resized_img_data);
-    }
+        imshow("Detection",h_img);
+        cv::waitKey(0);
+        //free(resized_img_data);
+    //}
     
     return 0;
 }
