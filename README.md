@@ -14,6 +14,7 @@ GPU-Based-Acceleration-Using-CUDA
 │   ├── Makefile
 │   ├── README.md
 │   └── Vid_Grayscale.cu
+├── Blurring_Timing_Script
 ├── CD-Classfier-Script
 ├── CD-Classfier-Timing
 ├── CD-Classifier
@@ -228,5 +229,5 @@ GPU-Based-Acceleration-Using-CUDA
     ├── README.md
     └── UI-Sidewalk-640x480.jpg
 
-41 directories, 181 files
+41 directories, 182 files
 ```
