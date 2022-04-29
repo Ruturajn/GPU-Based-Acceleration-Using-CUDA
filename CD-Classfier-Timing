@@ -46,7 +46,7 @@ total+="0"
 # The original array will have 10 elements, so just extend the idea for 10 elements.
 total=$(echo "${total}" | bc -l)
 
-# Now we compute the avergae by divinding the total by 10.
+# Now we compute the average by dividing the total by 10.
 echo -e "${BYellow}[ * ] Calculating Average ...${End_Colour}"
 total=$(echo "${total}/10" | bc -l)
 
