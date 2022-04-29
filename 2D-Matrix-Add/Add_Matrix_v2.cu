@@ -66,7 +66,7 @@ void refAdd(int *h_a, int *h_b, int *h_c, int m, int n, int *h_gpu_res)
         {
             int ind = (i * n + j);
             h_c[ind] = h_a[ind] + h_b[ind];
-            //assert(h_gpu_res[ind] == h_c[ind]);
+            assert(h_gpu_res[ind] == h_c[ind]);
         }
     }
 
